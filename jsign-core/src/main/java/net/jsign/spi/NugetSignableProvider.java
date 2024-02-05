@@ -26,7 +26,7 @@ import net.jsign.Signable;
 import net.jsign.nuget.NugetFile;
 
 /**
- * {@link SignableProvider} for MSI files.
+ * {@link SignableProvider} for nuget files.
  *
  * @since 6.1
  */
