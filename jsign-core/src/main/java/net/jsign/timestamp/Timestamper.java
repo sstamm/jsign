@@ -57,8 +57,6 @@ public abstract class Timestamper {
     /** Seconds to wait between retries */
     protected int retryWait = 10;
 
-    private boolean encapsulate = false;
-
     /**
      * Set the URL of the timestamping service.
      *
@@ -66,15 +64,6 @@ public abstract class Timestamper {
      */
     public void setURL(String tsaurl) {
         setURLs(tsaurl);
-    }
-
-    /**
-     * Set the URL of the timestamping service.
-     *
-     * @param tsaurl the URL of the timestamping service
-     */
-    public void setEncapsulteSignature(boolean encapsulate) {
-        this.encapsulate = encapsulate;
     }
 
     /**
@@ -225,7 +214,7 @@ public abstract class Timestamper {
         generator.addCertificates(certificateStore);
         generator.addSigners(new SignerInformationStore(signerInformation));
 
-        return generator.generate(sigData.getSignedContent(), encapsulate);
+        return generator.generate(sigData.getSignedContent(), true);
     }
 
     protected abstract CMSSignedData timestamp(DigestAlgorithm algo, byte[] encryptedDigest) throws IOException, TimestampingException;
@@ -242,8 +231,6 @@ public abstract class Timestamper {
             return new AuthenticodeTimestamper();
         case RFC3161:
             return new RFC3161Timestamper();
-        case NUGET:
-            return new NugetTimestamper();
         default:
             throw new IllegalArgumentException("Unsupported timestamping mode: " + mode);
         }
