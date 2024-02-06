@@ -43,7 +43,7 @@ public class NugetFileTest {
         FileUtils.copyFile(sourceFile, targetFile);
 
         KeyStore keystore = new KeyStoreBuilder().keystore("target/test-classes/keystores/keystore.jks").storepass("password").build();
-        AuthenticodeSigner signer = new AuthenticodeSigner(keystore, "test", "password").withTimestamping(false);
+        AuthenticodeSigner signer = new AuthenticodeSigner(keystore, "test", "password");
 
         try (Signable file = new NugetFile(targetFile)) {
             file.setSignature(null);

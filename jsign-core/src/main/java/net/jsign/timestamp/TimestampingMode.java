@@ -28,7 +28,11 @@ public enum TimestampingMode {
     AUTHENTICODE,
 
     /** RFC 3161 timestamping */
-    RFC3161;
+    RFC3161,
+    
+    /** NUGET timestamping */
+    NUGET;
+
 
     public static TimestampingMode of(String mode) {
         for (TimestampingMode m : values()) {

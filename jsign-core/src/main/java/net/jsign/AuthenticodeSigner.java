@@ -414,7 +414,7 @@ public class AuthenticodeSigner {
         if (timestamping) {
             Timestamper ts = timestamper;
             if (ts == null) {
-                ts = Timestamper.create(tsmode);
+                ts = Timestamper.create((file instanceof NugetFile ? TimestampingMode.NUGET : tsmode));
             }
             if (tsaurlOverride != null) {
                 ts.setURLs(tsaurlOverride);
