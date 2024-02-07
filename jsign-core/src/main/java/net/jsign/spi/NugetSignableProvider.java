@@ -30,17 +30,16 @@ import net.jsign.nuget.NugetFile;
  *
  * @since 6.1
  */
-@MetaInfServices
-public class NugetSignableProvider implements SignableProvider {
+@MetaInfServices(SignableProvider.class)
+public class NugetSignableProvider extends ExtensionBasedSignableProvider {
 
-	@Override
-	public boolean isSupported(File file) throws IOException {
-		return NugetFile.isNugetFile(file.getName());
-	}
+    public NugetSignableProvider() {
+        super("nupkg");
+    }
 
-	@Override
-	public Signable create(File file, Charset encoding) throws IOException {
-		return new NugetFile(file);
-	}
+    @Override
+    public Signable create(File file, Charset encoding) throws IOException {
+        return new NugetFile(file);
+    }
 
 }

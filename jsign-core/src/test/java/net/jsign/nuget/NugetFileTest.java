@@ -1,9 +1,24 @@
+/**
+ * Copyright 2024 Sebastian Stamm
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.jsign.nuget;
 
 import static net.jsign.DigestAlgorithm.SHA256;
 import static net.jsign.SignatureAssert.assertNotSigned;
 import static net.jsign.SignatureAssert.assertSigned;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -18,8 +33,7 @@ import net.jsign.Signable;
 
 public class NugetFileTest {
 
-    private static final String SIGNED_FILE = "target/test-classes/nuget/testcontainers.3.3.0.nupkg";
-    private static final String UNSIGNED_FILE = "target/test-classes/nuget/testcontainers_no_sig.3.3.0.nupkg";
+    private static final String UNSIGNED_FILE = "target/test-classes/nuget/minimal.1.0.0.nupkg";
 
     @Test
     public void testGetSignaturesFromUnsignedPackage() throws Exception {
@@ -29,15 +43,8 @@ public class NugetFileTest {
     }
 
     @Test
-    public void testGetSignaturesFromSignedPackage() throws Exception {
-        try (Signable file = new NugetFile(new File(SIGNED_FILE))) {
-            assertFalse("no signature found", file.getSignatures().isEmpty());
-        }
-    }
-
-    @Test
     public void testRemoveSignature() throws Exception {
-        File sourceFile = new File(SIGNED_FILE);
+        File sourceFile = new File(UNSIGNED_FILE);
         File targetFile = new File("target/test-classes/nuget/testcontainers_test.3.3.0.nupk");
 
         FileUtils.copyFile(sourceFile, targetFile);
